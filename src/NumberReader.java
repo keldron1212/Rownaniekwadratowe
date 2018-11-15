@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class NumberReader {
@@ -9,11 +10,17 @@ public class NumberReader {
     }
 
     public float readNextFloat(String variableName) {
-        System.out.println("Podaj wartość " + variableName);
-        //TODO Sprawdzanie czy na pewno liczba
-        return scanner.nextFloat();
+        float nextFloat;
+        try {
+            System.out.println("Podaj wartość " + variableName);
+            nextFloat = scanner.nextFloat();
+        } catch (InputMismatchException e) {
+            String next = scanner.next();
+            System.out.println("To nie jest liczba: "+ next + ". Podaj wartość liczbową!");
+            return readNextFloat(variableName);
+        }
+        return nextFloat;
     }
-
     public void scannerClose() {
         scanner.close();
     }
